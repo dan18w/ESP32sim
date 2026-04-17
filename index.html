@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema IoT Inteligente — ESP32</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav class="navbar">
+  <a href="#" class="nav-brand" data-section="home">
+    <div class="nav-logo">IoT</div>
+    <div class="nav-title">
+      ESP32 Smart System
+      <span>Sistema IoT Inteligente</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#" data-section="home" class="active">🏠 Inicio</a></li>
+    <li><a href="#" data-section="parte1">🌡️ Sensor</a></li>
+    <li><a href="#" data-section="parte2">📡 Bluetooth</a></li>
+    <li><a href="#" data-section="parte3">☁️ Nube</a></li>
+  </ul>
+
+  <div class="nav-status">
+    <div class="status-dot"></div>
+    <span>SISTEMA ACTIVO</span>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     PAGE WRAPPER
+══════════════════════════════════════════ -->
+<div class="page-wrapper">
+
+  <!-- ─── HOME ──────────────────────────────── -->
+  <section id="home" class="page-section active">
+    <div class="container">
+
+      <!-- Hero -->
+      <div style="text-align:center; padding: 3rem 0 2rem;">
+        <div class="section-badge">⚡ PROYECTO IoT — ESP32</div>
+        <h1 style="font-family:var(--font-display);font-size:clamp(28px,5vw,52px);font-weight:900;letter-spacing:2px;line-height:1.1;margin-top:12px;">
+          Sistema IoT <span style="color:var(--accent-blue)">Inteligente</span><br>
+          <span style="color:var(--accent-cyan)">con ESP32</span>
+        </h1>
+        <p style="max-width:600px;margin:16px auto 0;font-size:15px;color:var(--text-secondary);line-height:1.6;">
+          Plataforma de monitoreo y control IoT que integra lectura de sensores ambientales,
+          comunicación Bluetooth y gestión en la nube mediante ThingSpeak y Blynk.
+        </p>
+      </div>
+
+      <!-- Wokwi note -->
+      <div class="wokwi-box" style="max-width:800px;margin:0 auto 2rem;">
+        <span style="font-size:20px;">🔗</span>
+        <div>
+          <strong style="color:var(--accent-cyan);">Nota Wokwi:</strong>
+          Este sistema es 100% simulable en <a href="https://wokwi.com" target="_blank">Wokwi</a>.
+          Puedes crear un proyecto con ESP32 + DHT22 y cargar el código Arduino que replica esta lógica.
+          El dashboard web sirve como interfaz de monitoreo complementaria.
+        </div>
+      </div>
+
+      <!-- Cards grid -->
+      <div class="grid-3" style="max-width:1000px;margin:0 auto 3rem;">
+
+        <!-- Card P1 -->
+        <div class="card" style="cursor:pointer;text-align:center;padding:2rem;" onclick="navigateTo('parte1')">
+          <div style="font-size:48px;margin-bottom:1rem;">🌡️</div>
+          <div class="section-badge" style="margin:0 auto 12px;width:fit-content;">PARTE 1</div>
+          <h3 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-bottom:8px;">
+            Sensor Ambiental
+          </h3>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:1.5rem;">
+            Lectura de temperatura y humedad en tiempo real con DHT22.
+            API OpenWeatherMap + modo simulado. Control automático de LED.
+          </p>
+          <button class="btn btn-primary" style="width:100%;">Abrir Parte 1 →</button>
+        </div>
+
+        <!-- Card P2 -->
+        <div class="card" style="cursor:pointer;text-align:center;padding:2rem;" onclick="navigateTo('parte2')">
+          <div style="font-size:48px;margin-bottom:1rem;">📡</div>
+          <div class="section-badge" style="margin:0 auto 12px;width:fit-content;">PARTE 2</div>
+          <h3 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-bottom:8px;">
+            Control Bluetooth
+          </h3>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:1.5rem;">
+            Simulación de comunicación BLE. Escaneo de dispositivos,
+            conexión y control del LED mediante comandos ON/OFF.
+          </p>
+          <button class="btn btn-primary" style="width:100%;">Abrir Parte 2 →</button>
+        </div>
+
+        <!-- Card P3 -->
+        <div class="card" style="cursor:pointer;text-align:center;padding:2rem;" onclick="navigateTo('parte3')">
+          <div style="font-size:48px;margin-bottom:1rem;">☁️</div>
+          <div class="section-badge" style="margin:0 auto 12px;width:fit-content;">PARTE 3</div>
+          <h3 style="font-family:var(--font-display);font-size:16px;font-weight:700;margin-bottom:8px;">
+            Control en la Nube
+          </h3>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:1.5rem;">
+            Dashboard tipo ThingSpeak / Blynk. Gráficas en tiempo real,
+            control remoto del LED y monitoreo del estado del sistema.
+          </p>
+          <button class="btn btn-primary" style="width:100%;">Abrir Parte 3 →</button>
+        </div>
+
+      </div>
+
+      <!-- Tech stack -->
+      <div class="card" style="max-width:1000px;margin:0 auto;">
+        <div class="card-title">Stack Tecnológico</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <span class="badge badge-blue">ESP32 DevKit</span>
+          <span class="badge badge-blue">DHT22</span>
+          <span class="badge badge-green">Arduino IDE</span>
+          <span class="badge badge-green">OpenWeatherMap API</span>
+          <span class="badge badge-orange">Bluetooth BLE</span>
+          <span class="badge badge-orange">ThingSpeak</span>
+          <span class="badge badge-orange">Blynk IoT</span>
+          <span class="badge badge-blue">HTML / CSS / JS</span>
+          <span class="badge badge-blue">Chart.js</span>
+          <span class="badge badge-green">Wokwi Simulator</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-grid">
+        <div>
+          <p style="font-family:var(--font-display);font-size:12px;color:var(--text-muted);margin-bottom:12px;letter-spacing:1px;">RECURSOS Y REFERENCIAS</p>
+          <div class="footer-links">
+            <a class="footer-link" href="https://openweathermap.org/api" target="_blank">🌤 OpenWeatherMap</a>
+            <a class="footer-link" href="https://www.arduino.cc/en/reference/esp32" target="_blank">🔌 Arduino ESP32</a>
+            <a class="footer-link" href="https://blynk.io" target="_blank">📱 Blynk</a>
+            <a class="footer-link" href="https://thingspeak.com" target="_blank">📊 ThingSpeak</a>
+            <a class="footer-link" href="https://wokwi.com" target="_blank">🔗 Wokwi</a>
+          </div>
+        </div>
+        <div class="footer-copy">
+          <div style="font-family:var(--font-display);font-size:14px;color:var(--text-secondary);">ESP32 IoT</div>
+          <div style="margin-top:4px;">Sistemas Embebidos — 2025</div>
+          <div style="margin-top:4px;color:var(--accent-cyan);">Universidad de la Costa</div>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ─── PARTE 1: SENSOR AMBIENTAL ────────── -->
+  <section id="parte1" class="page-section">
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-badge">📋 PARTE 1 — CLIENTE</div>
+        <h2 class="section-title">Sensor <span>Ambiental</span></h2>
+        <p class="section-subtitle">ESP32 + DHT22 capturando temperatura y humedad. Datos en tiempo real via API OpenWeatherMap (Barranquilla).</p>
+      </div>
+
+      <!-- Wokwi hint -->
+      <div class="wokwi-box">
+        <span>🔗</span>
+        <div>
+          Simula este circuito en <a href="https://wokwi.com/projects/new/esp32" target="_blank">Wokwi → ESP32 + DHT22</a>:
+          GPIO4 → DATA del DHT22, GPIO2 → LED. Carga el código Arduino al final de esta sección.
+        </div>
+      </div>
+
+      <!-- Mode toggle -->
+      <div class="card" style="margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);">MODO DE DATOS:</span>
+        <button id="btn-mode-real" class="btn btn-primary btn-sm">🌐 Modo REAL (API)</button>
+        <button id="btn-mode-sim" class="btn btn-ghost btn-sm">⚙️ Modo SIMULADO</button>
+        <div style="margin-left:auto;display:flex;gap:8px;">
+          <button id="btn-p1-error" class="btn btn-danger btn-sm">⚠️ Error Sensor</button>
+          <button id="btn-p1-disconnect" class="btn btn-danger btn-sm">📵 Desconectar WiFi</button>
+          <button id="btn-p1-clear" class="btn btn-ghost btn-sm">🗑 Limpiar</button>
+        </div>
+      </div>
+
+        <!-- API Key input for OpenWeatherMap (Parte 1) -->
+        <div class="card" style="margin-bottom:1.5rem;">
+          <div class="card-title">Conectar OpenWeatherMap</div>
+          <div style="margin-top:0.75rem;">
+            <form class="api-key-form" onsubmit="return false;">
+              <input id="p1-api-key" type="text" placeholder="Pegar OpenWeatherMap API Key aquí" />
+              <button id="btn-p1-save-api" class="btn btn-primary">Guardar</button>
+            </form>
+            <div style="margin-top:6px;display:flex;align-items:center;gap:10px;">
+              <span id="p1-api-status" class="api-key-note">API actual: <strong id="p1-api-current">(usar demo si está vacío)</strong></span>
+            </div>
+          </div>
+        </div>
+
+      <!-- Main Grid -->
+      <div class="grid-2" style="margin-bottom:1.5rem;">
+
+        <!-- Left: Circuit Visual -->
+        <div class="card">
+          <div class="card-title">Circuito Virtual</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:24px;padding:1rem 0;flex-wrap:wrap;">
+
+            <!-- DHT22 Sensor -->
+            <div style="text-align:center;">
+              <div class="sensor-dht22" style="margin:0 auto;">
+                <div style="font-family:var(--font-mono);font-size:8px;color:#4a7a4a;">VCC · DATA · NC · GND</div>
+                <div class="sensor-pins">
+                  <div class="sensor-pin"></div>
+                  <div class="sensor-pin" style="background:var(--accent-blue);"></div>
+                  <div class="sensor-pin"></div>
+                  <div class="sensor-pin" style="background:#333;"></div>
+                </div>
+              </div>
+              <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:6px;">DHT22</div>
+            </div>
+
+            <!-- Wire -->
+            <div style="flex:1;min-width:30px;">
+              <div class="connection-wire"></div>
+              <div style="text-align:center;font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:2px;">GPIO4</div>
+            </div>
+
+            <!-- ESP32 -->
+            <div style="text-align:center;">
+              <div class="esp32-board">
+                <div class="esp32-antenna"></div>
+                <div style="font-family:var(--font-mono);font-size:8px;color:#4a7a4a;margin-bottom:8px;letter-spacing:1px;">ESP32-WROOM-32</div>
+                <div class="esp32-chip">XTENSA LX6</div>
+                <div class="pin-row" style="margin-top:8px;">
+                  <div class="pin"><div class="pin-dot power"></div><span>3.3V</span></div>
+                  <div class="pin"><div class="pin-dot active" id="pin-gpio4"></div><span>GPIO4 → DHT22</span></div>
+                  <div class="pin"><div class="pin-dot" id="pin-gpio2"></div><span>GPIO2 → LED</span></div>
+                  <div class="pin"><div class="pin-dot gnd"></div><span>GND</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wire to LED -->
+            <div style="flex:1;min-width:30px;">
+              <div class="connection-wire"></div>
+              <div style="text-align:center;font-family:var(--font-mono);font-size:9px;color:var(--text-muted);margin-top:2px;">GPIO2 + 330Ω</div>
+            </div>
+
+            <!-- LED -->
+            <div class="led-container">
+              <div class="led large led-global" id="p1-led"></div>
+              <div class="led-label">LED D1</div>
+              <span id="p1-led-badge" class="led-status-text badge badge-red">APAGADO</span>
+            </div>
+
+          </div>
+
+          <!-- Connection status -->
+          <div class="divider"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <div id="p1-conn-status" class="status-indicator status-online">
+              <div class="dot"></div> WiFi Conectado
+            </div>
+            <div id="p1-last-update" style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">Esperando datos...</div>
+          </div>
+        </div>
+
+        <!-- Right: Metrics -->
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <!-- Temperature -->
+          <div class="metric-card">
+            <div class="metric-label">🌡️ Temperatura</div>
+            <div style="display:flex;align-items:baseline;gap:4px;">
+              <div class="metric-value" id="p1-temp">--.-</div>
+              <div class="metric-unit">°C</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="p1-temp-bar" style="width:0%;background:linear-gradient(90deg,var(--accent-blue),var(--accent-orange));"></div>
+            </div>
+            <div class="metric-status">Umbral LED ON: &gt; 28°C · Ciudad: Barranquilla</div>
+          </div>
+
+          <!-- Humidity -->
+          <div class="metric-card">
+            <div class="metric-label">💧 Humedad Relativa</div>
+            <div style="display:flex;align-items:baseline;gap:4px;">
+              <div class="metric-value" id="p1-hum" style="color:var(--accent-blue);">--</div>
+              <div class="metric-unit">%</div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="p1-hum-bar" style="width:0%;"></div>
+            </div>
+            <div class="metric-status">Sensor: DHT22 · Precisión: ±2%</div>
+          </div>
+
+          <!-- LED Status Card -->
+          <div class="metric-card">
+            <div class="metric-label">💡 Estado del LED</div>
+            <div style="display:flex;align-items:center;gap:16px;margin-top:8px;">
+              <div class="led large led-global" id="p1-led-card"></div>
+              <div>
+                <div style="font-family:var(--font-display);font-size:18px;font-weight:700;" id="p1-led-label">APAGADO</div>
+                <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">Auto-control por temperatura</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Console -->
+      <div class="card">
+        <div class="card-title">Monitor Serial</div>
+        <div class="console" id="console-p1">
+          <div class="console-header">
+            <div class="console-dots">
+              <div class="console-dot"></div>
+              <div class="console-dot"></div>
+              <div class="console-dot"></div>
+            </div>
+            <div class="console-title">ESP32 SERIAL MONITOR — 115200 baud</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arduino code reference -->
+      <div class="card" style="margin-top:1.5rem;">
+        <div class="card-title">Código Arduino (referencia Wokwi)</div>
+        <pre style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);overflow-x:auto;line-height:1.7;padding:1rem;background:#020a15;border-radius:8px;border:1px solid var(--border);">
+<span style="color:var(--accent-blue);">#include</span> &lt;DHT.h&gt;
+<span style="color:var(--accent-blue);">#include</span> &lt;WiFi.h&gt;
+<span style="color:var(--accent-blue);">#include</span> &lt;HTTPClient.h&gt;
+
+<span style="color:var(--text-muted);">// Configuración de pines</span>
+<span style="color:var(--accent-orange);">#define</span> DHTPIN   4
+<span style="color:var(--accent-orange);">#define</span> DHTTYPE  DHT22
+<span style="color:var(--accent-orange);">#define</span> LED_PIN  2
+
+<span style="color:var(--text-muted);">// Credenciales WiFi</span>
+<span style="color:var(--accent-blue);">const char*</span> ssid     = <span style="color:var(--accent-green);">"TU_SSID"</span>;
+<span style="color:var(--accent-blue);">const char*</span> password = <span style="color:var(--accent-green);">"TU_PASSWORD"</span>;
+
+DHT dht(DHTPIN, DHTTYPE);
+
+<span style="color:var(--accent-blue);">void</span> setup() {
+  Serial.begin(115200);
+  dht.begin();
+  pinMode(LED_PIN, OUTPUT);
+  WiFi.begin(ssid, password);
+  <span style="color:var(--accent-blue);">while</span> (WiFi.status() != WL_CONNECTED) {
+    delay(500); Serial.print(<span style="color:var(--accent-green);">"."</span>);
+  }
+  Serial.println(<span style="color:var(--accent-green);">"WiFi conectado: "</span> + WiFi.localIP().toString());
+}
+
+<span style="color:var(--accent-blue);">void</span> loop() {
+  <span style="color:var(--accent-blue);">float</span> h = dht.readHumidity();
+  <span style="color:var(--accent-blue);">float</span> t = dht.readTemperature();
+  <span style="color:var(--accent-blue);">if</span> (isnan(h) || isnan(t)) {
+    Serial.println(<span style="color:var(--accent-green);">"Error leyendo DHT22!"</span>); <span style="color:var(--accent-blue);">return</span>;
+  }
+  Serial.printf(<span style="color:var(--accent-green);">"T: %.1f°C  H: %.1f%%\n"</span>, t, h);
+  digitalWrite(LED_PIN, t > 28 ? HIGH : LOW);
+  delay(15000);
+}</pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── PARTE 2: BLUETOOTH ───────────────── -->
+  <section id="parte2" class="page-section">
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-badge">📋 PARTE 2 — BLUETOOTH</div>
+        <h2 class="section-title">Control <span>Bluetooth</span></h2>
+        <p class="section-subtitle">Simulación de comunicación BLE con ESP32. Escanea dispositivos, conéctate y controla el LED con comandos remotos.</p>
+      </div>
+
+      <div class="wokwi-box">
+        <span>🔗</span>
+        <div>
+          En <a href="https://wokwi.com" target="_blank">Wokwi</a>, usa el componente <strong>ESP32</strong> con la librería
+          <code style="color:var(--accent-cyan);background:rgba(0,212,255,0.08);padding:2px 6px;border-radius:4px;">BLEDevice</code>.
+          Instala en tu móvil la app <a href="https://play.google.com/store/apps/details?id=com.nordicsemi.nrfblelightapp" target="_blank">nRF Connect</a> para probar la conexión BLE real.
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:1.5rem;">
+
+        <!-- Bluetooth panel -->
+        <div class="card">
+          <div class="card-title">Panel BLE</div>
+
+          <!-- BT Status header -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:8px;">
+            <div id="bt-conn-status" class="status-indicator status-offline">
+              <div class="dot"></div> Desconectado
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button id="btn-bt-scan" class="btn btn-primary btn-sm">🔍 Escanear</button>
+              <button id="btn-bt-disconnect" class="btn btn-ghost btn-sm" disabled>Desconectar</button>
+              <button id="btn-p2-error" class="btn btn-danger btn-sm">⚠️ Error BT</button>
+              <button id="btn-p2-clear" class="btn btn-ghost btn-sm">🗑</button>
+            </div>
+          </div>
+
+          <!-- BT scanning visual -->
+          <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem;">
+            <div class="bt-rings" id="bt-rings">
+              <div class="bt-ring"></div>
+              <div class="bt-ring"></div>
+              <div class="bt-ring"></div>
+              <div class="bt-icon">⬡</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-bottom:4px;">Bluetooth BLE</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">UUID: 0000-ffe0-0000-1000-8000</div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">Canal: 2.4 GHz / BLE 4.2</div>
+            </div>
+          </div>
+
+          <!-- Device list -->
+          <div style="margin-bottom:1rem;">
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);letter-spacing:2px;margin-bottom:8px;">DISPOSITIVOS ENCONTRADOS</div>
+            <div id="bt-device-list">
+              <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);padding:12px;text-align:center;background:var(--bg-secondary);border-radius:6px;">
+                Presiona "Escanear" para buscar dispositivos BLE
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- LED Control Panel -->
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+
+          <!-- LED visual -->
+          <div class="card" style="text-align:center;padding:2rem;">
+            <div class="card-title">Estado del LED</div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:1rem 0;">
+              <div class="led large led-global" id="p2-led" style="width:60px;height:60px;"></div>
+              <div>
+                <div id="p2-led-status" class="badge badge-red" style="font-size:13px;padding:4px 14px;">APAGADO</div>
+                <div style="margin-top:8px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">GPIO2 · 330Ω · VCC 3.3V</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Control buttons -->
+          <div class="card">
+            <div class="card-title">Control Remoto BLE</div>
+            <div style="display:flex;gap:12px;margin-bottom:1rem;">
+              <button id="btn-bt-on" class="btn btn-success btn-lg" style="flex:1;" disabled>
+                💡 ON
+              </button>
+              <button id="btn-bt-off" class="btn btn-danger btn-lg" style="flex:1;" disabled>
+                💡 OFF
+              </button>
+            </div>
+            <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-align:center;">
+              Conecta un dispositivo para habilitar el control
+            </div>
+          </div>
+
+          <!-- ESP32 mini visual -->
+          <div class="card" style="padding:1rem;">
+            <div class="card-title">Módulo ESP32</div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div class="esp32-board" style="transform:scale(0.85);transform-origin:left center;">
+                <div class="esp32-antenna"></div>
+                <div class="esp32-chip">BLE ACTIVE</div>
+                <div class="pin-row" style="margin-top:8px;">
+                  <div class="pin"><div class="pin-dot active"></div><span>BLE ON</span></div>
+                  <div class="pin"><div class="pin-dot" id="p2-gpio2-pin"></div><span>GPIO2</span></div>
+                </div>
+              </div>
+              <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);line-height:1.8;">
+                Chip: ESP32-WROOM<br>
+                RAM: 520 KB<br>
+                BLE: 4.2 compliant<br>
+                TX Power: +9 dBm
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Console -->
+      <div class="card">
+        <div class="card-title">Monitor Serial BLE</div>
+        <div class="console" id="console-p2">
+          <div class="console-header">
+            <div class="console-dots">
+              <div class="console-dot"></div>
+              <div class="console-dot"></div>
+              <div class="console-dot"></div>
+            </div>
+            <div class="console-title">ESP32 BLE MONITOR — 115200 baud</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arduino BLE Code -->
+      <div class="card" style="margin-top:1.5rem;">
+        <div class="card-title">Código Arduino BLE (referencia Wokwi)</div>
+        <pre style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);overflow-x:auto;line-height:1.7;padding:1rem;background:#020a15;border-radius:8px;border:1px solid var(--border);">
+<span style="color:var(--accent-blue);">#include</span> &lt;BLEDevice.h&gt;
+<span style="color:var(--accent-blue);">#include</span> &lt;BLEServer.h&gt;
+<span style="color:var(--accent-blue);">#include</span> &lt;BLEUtils.h&gt;
+
+<span style="color:var(--accent-orange);">#define</span> SERVICE_UUID        <span style="color:var(--accent-green);">"0000FFE0-0000-1000-8000-00805F9B34FB"</span>
+<span style="color:var(--accent-orange);">#define</span> CHARACTERISTIC_UUID <span style="color:var(--accent-green);">"0000FFE1-0000-1000-8000-00805F9B34FB"</span>
+<span style="color:var(--accent-orange);">#define</span> LED_PIN 2
+
+<span style="color:var(--accent-blue);">class</span> MyCallbacks : <span style="color:var(--accent-blue);">public</span> BLECharacteristicCallbacks {
+  <span style="color:var(--accent-blue);">void</span> onWrite(BLECharacteristic *c) {
+    String val = c->getValue().c_str();
+    <span style="color:var(--accent-blue);">if</span> (val == <span style="color:var(--accent-green);">"ON"</span>)  digitalWrite(LED_PIN, HIGH);
+    <span style="color:var(--accent-blue);">if</span> (val == <span style="color:var(--accent-green);">"OFF"</span>) digitalWrite(LED_PIN, LOW);
+    Serial.println(<span style="color:var(--accent-green);">"CMD: "</span> + val);
+  }
+};
+
+<span style="color:var(--accent-blue);">void</span> setup() {
+  Serial.begin(115200);
+  pinMode(LED_PIN, OUTPUT);
+  BLEDevice::init(<span style="color:var(--accent-green);">"ESP32_Device"</span>);
+  BLEServer *server = BLEDevice::createServer();
+  BLEService *svc   = server->createService(SERVICE_UUID);
+  BLECharacteristic *ch = svc->createCharacteristic(
+    CHARACTERISTIC_UUID, BLECharacteristic::PROPERTY_WRITE);
+  ch->setCallbacks(<span style="color:var(--accent-blue);">new</span> MyCallbacks());
+  svc->start();
+  BLEDevice::startAdvertising();
+  Serial.println(<span style="color:var(--accent-green);">"BLE listo. Esperando conexión..."</span>);
+}</pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── PARTE 3: NUBE ────────────────────── -->
+  <section id="parte3" class="page-section">
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-badge">📋 PARTE 3 — NUBE</div>
+        <h2 class="section-title">Control en la <span>Nube</span></h2>
+        <p class="section-subtitle">Dashboard estilo ThingSpeak / Blynk con gráficas en tiempo real, control remoto del LED y monitoreo del estado del sistema IoT.</p>
+      </div>
+
+      <div class="wokwi-box">
+        <span>🔗</span>
+        <div>
+          Crea un canal en <a href="https://thingspeak.com" target="_blank">ThingSpeak</a> con 3 fields: temperatura, humedad, LED.
+          O usa <a href="https://blynk.io" target="_blank">Blynk</a> con un Virtual Pin V1 para el LED y V2/V3 para los datos del sensor.
+        </div>
+      </div>
+
+      <!-- Platform selector -->
+      <div class="card" style="margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);">PLATAFORMA:</span>
+        <button id="btn-platform-ts" class="btn btn-primary btn-sm">📊 ThingSpeak</button>
+        <button id="btn-platform-bl" class="btn btn-ghost btn-sm">📱 Blynk IoT</button>
+        <div style="margin-left:auto;display:flex;gap:8px;">
+          <button id="btn-cloud-error" class="btn btn-danger btn-sm">⚠️ Error Nube</button>
+          <button id="btn-cloud-reconnect" class="btn btn-ghost btn-sm">🔄 Reconectar</button>
+          <button id="btn-p3-clear" class="btn btn-ghost btn-sm">🗑 Limpiar</button>
+        </div>
+      </div>
+
+      <!-- Cloud status bar -->
+      <div class="card" style="margin-bottom:1.5rem;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div id="cloud-status-text" class="status-indicator status-online">
+          <div class="dot"></div> Conectado a la nube
+        </div>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">
+          Plataforma: <span id="cloud-platform-name" style="color:var(--accent-cyan);">ThingSpeak</span>
+        </span>
+        <span id="p3-last-update" style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-left:auto;">
+          Esperando sync...
+        </span>
+        <span id="send-badge" class="badge badge-green" style="opacity:0;transition:opacity 0.5s;">✓ Datos enviados</span>
+      </div>
+
+      <!-- Dashboard grid -->
+      <div class="grid-2" style="margin-bottom:1.5rem;">
+
+        <!-- Temperature chart -->
+        <div class="card">
+          <div class="card-title">Temperatura — field1</div>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:1rem;">
+            <span class="metric-value" id="p3-temp" style="font-size:28px;">--.-</span>
+            <span class="metric-unit">°C</span>
+            <span class="badge badge-orange" style="margin-left:auto;">LIVE</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-temp"></canvas>
+          </div>
+        </div>
+
+        <!-- Humidity chart -->
+        <div class="card">
+          <div class="card-title">Humedad — field2</div>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:1rem;">
+            <span class="metric-value" id="p3-hum" style="font-size:28px;">--</span>
+            <span class="metric-unit">%</span>
+            <span class="badge badge-blue" style="margin-left:auto;">LIVE</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-hum"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- LED Control + Cloud visual -->
+      <div class="grid-2" style="margin-bottom:1.5rem;">
+
+        <!-- LED cloud control -->
+        <div class="card" style="text-align:center;padding:2rem;">
+          <div class="card-title">Control Remoto LED — field3 / V1</div>
+          <div style="display:flex;justify-content:center;margin:1.5rem 0;">
+            <div class="led large led-global" id="p3-led" style="width:60px;height:60px;"></div>
+          </div>
+          <div id="p3-led-status" class="badge badge-red" style="font-size:13px;padding:4px 16px;display:inline-block;margin-bottom:1.5rem;">APAGADO</div>
+          <br>
+          <button id="btn-cloud-toggle" class="btn btn-success btn-lg" style="min-width:200px;">
+            💡 Encender LED
+          </button>
+          <div style="margin-top:12px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">
+            Sincronizado con Parte 1 y Parte 2
+          </div>
+        </div>
+
+        <!-- Cloud animation -->
+        <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:2rem;text-align:center;">
+          <div class="cloud-icon" style="position:relative;">
+            ☁️
+            <div class="cloud-beam" id="cloud-beam"></div>
+          </div>
+          <div style="font-family:var(--font-display);font-size:14px;font-weight:700;">Envío de Datos</div>
+          <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);line-height:1.8;">
+            Intervalo de envío: 15s<br>
+            Protocolo: HTTPS / REST API<br>
+            Formato: JSON / URL Params<br>
+            Latencia simulada: 200–900ms
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:240px;">
+            <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">
+              <span>Paquetes enviados:</span>
+              <span id="p3-pkt-count" style="color:var(--accent-green);">0</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">
+              <span>Errores:</span>
+              <span id="p3-err-count" style="color:var(--accent-red);">0</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">
+              <span>Uptime:</span>
+              <span id="p3-uptime" style="color:var(--accent-cyan);">00:00:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Console -->
+      <div class="card">
+        <div class="card-title">Monitor Serial — Nube</div>
+        <div class="console" id="console-p3">
+          <div class="console-header">
+            <div class="console-dots">
+              <div class="console-dot"></div>
+              <div class="console-dot"></div>
+              <div class="console-dot"></div>
+            </div>
+            <div class="console-title">ESP32 CLOUD MONITOR — 115200 baud</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arduino cloud code -->
+      <div class="card" style="margin-top:1.5rem;">
+        <div class="card-title">Código Arduino — ThingSpeak (referencia Wokwi)</div>
+        <pre style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);overflow-x:auto;line-height:1.7;padding:1rem;background:#020a15;border-radius:8px;border:1px solid var(--border);">
+<span style="color:var(--accent-blue);">#include</span> &lt;WiFi.h&gt;
+<span style="color:var(--accent-blue);">#include</span> &lt;ThingSpeak.h&gt;
+<span style="color:var(--accent-blue);">#include</span> &lt;DHT.h&gt;
+
+<span style="color:var(--accent-blue);">const char*</span> ssid     = <span style="color:var(--accent-green);">"TU_SSID"</span>;
+<span style="color:var(--accent-blue);">const char*</span> password = <span style="color:var(--accent-green);">"TU_PASSWORD"</span>;
+<span style="color:var(--accent-blue);">unsigned long</span> channelID = 1234567;
+<span style="color:var(--accent-blue);">const char*</span>   apiKey    = <span style="color:var(--accent-green);">"TU_API_KEY"</span>;
+
+WiFiClient client;
+DHT dht(4, DHT22);
+
+<span style="color:var(--accent-blue);">void</span> setup() {
+  Serial.begin(115200);
+  dht.begin();
+  pinMode(2, OUTPUT);
+  WiFi.begin(ssid, password);
+  <span style="color:var(--accent-blue);">while</span> (WiFi.status() != WL_CONNECTED) delay(500);
+  ThingSpeak.begin(client);
+  Serial.println(<span style="color:var(--accent-green);">"ThingSpeak conectado."</span>);
+}
+
+<span style="color:var(--accent-blue);">void</span> loop() {
+  <span style="color:var(--accent-blue);">float</span> t = dht.readTemperature();
+  <span style="color:var(--accent-blue);">float</span> h = dht.readHumidity();
+  <span style="color:var(--accent-blue);">int</span>   ledState = digitalRead(2);
+  
+  ThingSpeak.setField(1, t);
+  ThingSpeak.setField(2, h);
+  ThingSpeak.setField(3, ledState);
+  ThingSpeak.writeFields(channelID, apiKey);
+  
+  Serial.printf(<span style="color:var(--accent-green);">"Enviado → T:%.1f H:%.1f LED:%d\n"</span>, t, h, ledState);
+  delay(15000); <span style="color:var(--text-muted);">// ThingSpeak: mín 15s</span>
+}</pre>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end page-wrapper -->
+
+<!-- Scripts -->
+<script src="script.js"></script>
+<script src="parte1.js"></script>
+<script src="parte2.js"></script>
+<script src="parte3.js"></script>
+
+<!-- Extra: packet counter and uptime for Part 3 -->
+<script>
+(function() {
+  let packets = 0;
+  let errors = 0;
+  let startTime = Date.now();
+
+  document.addEventListener('ledChanged', () => {});
+
+  // Uptime counter
+  setInterval(() => {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const h = String(Math.floor(elapsed / 3600)).padStart(2, '0');
+    const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+    const s = String(elapsed % 60).padStart(2, '0');
+    const el = document.getElementById('p3-uptime');
+    if (el) el.textContent = `${h}:${m}:${s}`;
+  }, 1000);
+
+  // Packet counter (increments with sensor updates)
+  setInterval(() => {
+    if (IoTState.cloudConnected !== false) {
+      packets++;
+      const el = document.getElementById('p3-pkt-count');
+      if (el) el.textContent = packets;
+    }
+  }, 15000);
+
+  // Sync secondary LED indicators (led-global class elements)
+  document.addEventListener('ledChanged', (e) => {
+    // Sync the small card LED in Part 1
+    const p1LedLabel = document.getElementById('p1-led-label');
+    if (p1LedLabel) p1LedLabel.textContent = e.detail.state ? 'ENCENDIDO' : 'APAGADO';
+    // Sync GPIO2 pin indicator
+    const gpio2 = document.getElementById('pin-gpio2');
+    if (gpio2) gpio2.classList.toggle('active', e.detail.state);
+    const p2gpio = document.getElementById('p2-gpio2-pin');
+    if (p2gpio) p2gpio.classList.toggle('active', e.detail.state);
+  });
+})();
+</script>
+
+</body>
+</html>
