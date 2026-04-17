@@ -21,7 +21,7 @@ const IoTState = {
 };
 
 // ── WEATHER API ────────────────────────────
-const WEATHER_API_KEY = 'a6a783d3cca52c889cc84da9571db65f'; // demo key for Barranquilla
+const WEATHER_API_KEY = ''; // demo key for Barranquilla
 const WEATHER_CITY = 'Barranquilla';
 
 
